@@ -1,6 +1,5 @@
 package com.example.todobudyy.Utils;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -25,7 +24,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TASK + " TEXT, " +
                     STATUS + " INTEGER)";
-
     private SQLiteDatabase db;
 
     public DatabaseHandler(Context context) {
@@ -39,14 +37,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Drop the older tables
         db.execSQL("DROP TABLE IF EXISTS " + TODO_TABLE);
+        // Create the table again
         onCreate(db);
     }
 
     public void openDatabase() {
-        if (db == null || !db.isOpen()) {
-            db = this.getWritableDatabase();
-        }
+        db = this.getWritableDatabase();
     }
 
     public void insertTask(ToDoModel task) {
@@ -59,7 +57,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(TODO_TABLE, null, cv);
     }
 
-    @SuppressLint("Range")
     public List<ToDoModel> getAllTasks() {
         List<ToDoModel> taskList = new ArrayList<>();
         Cursor cur = null;
@@ -91,33 +88,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public void updateStatus(int id, int status) {
-        if (db == null || !db.isOpen()) {
-            openDatabase();
-        }
         ContentValues cv = new ContentValues();
         cv.put(STATUS, status);
         db.update(TODO_TABLE, cv, ID + "=?", new String[]{String.valueOf(id)});
     }
 
-    public void updateTask(int id, String taskName) {
-        if (db == null || !db.isOpen()) {
-            openDatabase();
-        }
-        ContentValues values = new ContentValues();
-        values.put(TASK, taskName); // Use correct column name for the task
-        db.update(TODO_TABLE, values, ID + "=?", new String[]{String.valueOf(id)});
+    public void updateTask(int id, String task) {
+        ContentValues cv = new ContentValues();
+        cv.put(TASK, task);
+        db.update(TODO_TABLE, cv, ID + "=?", new String[]{String.valueOf(id)});
     }
 
     public void deleteTask(int id) {
-        if (db == null || !db.isOpen()) {
-            openDatabase();
-        }
         db.delete(TODO_TABLE, ID + "=?", new String[]{String.valueOf(id)});
-    }
-
-    public void closeDatabase() {
-        if (db != null && db.isOpen()) {
-            db.close();
-        }
     }
 }

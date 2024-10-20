@@ -97,4 +97,6 @@ public class ToDoAdaptor extends RecyclerView.Adapter<ToDoAdaptor.ViewHolder> {
             task = view.findViewById(R.id.todoCheckBox);
         }
     }
+
+
 }

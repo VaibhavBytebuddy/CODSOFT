@@ -2,6 +2,7 @@ package com.example.todobudyy;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DrawFilter;
@@ -14,11 +15,15 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todobudyy.Adaptor.ToDoAdaptor;
+import com.example.todobudyy.Model.ToDoModel;
+
 
 import java.util.ConcurrentModificationException;
+import java.util.List;
 
 public class RecyclerItemTouchHelper  extends ItemTouchHelper.SimpleCallback {
     private ToDoAdaptor adapter;
+    private SQLiteDatabase db;
     public RecyclerItemTouchHelper(ToDoAdaptor adaptor)
     {
         super(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
@@ -110,5 +115,9 @@ public class RecyclerItemTouchHelper  extends ItemTouchHelper.SimpleCallback {
         background.draw(c);
         icon.draw(c);
     }
+
+
+
+
 
 }
