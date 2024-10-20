@@ -8,9 +8,12 @@ import android.graphics.Color;
 import android.graphics.DrawFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,6 +63,21 @@ public class RecyclerItemTouchHelper  extends ItemTouchHelper.SimpleCallback {
             dialog.show();
         }else
         {
+            // Get the task item at the current position
+            ToDoModel item = adapter.getItem(position);
+
+            // Create a bundle to pass data to the AddNewTask dialog
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", item.getId());
+            bundle.putString("task", item.getTask());
+
+            // Create a new instance of AddNewTask fragment
+            AddNewTask fragment = new AddNewTask();
+            fragment.setArguments(bundle);
+
+            // Show the AddNewTask dialog to edit the task using the context
+            FragmentManager fragmentManager = ((AppCompatActivity) adapter.getContext()).getSupportFragmentManager();
+            fragment.show(fragmentManager, AddNewTask.TAG);
 
         }
 

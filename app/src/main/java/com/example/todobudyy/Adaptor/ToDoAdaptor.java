@@ -98,5 +98,10 @@ public class ToDoAdaptor extends RecyclerView.Adapter<ToDoAdaptor.ViewHolder> {
         }
     }
 
+    // Add this method to get the item at a specific position
+    public ToDoModel getItem(int position) {
+        return todoList.get(position);
+    }
+
 
 }
